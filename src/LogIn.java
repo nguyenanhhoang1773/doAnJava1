@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -18,9 +19,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 public class LogIn extends JFrame {
-	 private Socket clientSocket;
-	 private BufferedReader reader;
-	    private PrintWriter writer;
+	private Socket clientSocket;
+	private BufferedReader reader;
+	private PrintWriter writer;
 	private JPanel contentPane;
 	private JTextField userName;
 	private JTextField password;
@@ -43,7 +44,7 @@ public class LogIn extends JFrame {
 		@Override
 		public void run() {
 			 Boolean isValid ;
-			  String line;
+			 String line;
 			try {
 	         while ((line = reader.readLine()) != null) {
 	             if(line.equals("valid")) {
@@ -77,7 +78,6 @@ public class LogIn extends JFrame {
           }
 		  ServerHandle sh = new ServerHandle();
 		  sh.start();
-//		  
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -126,6 +126,12 @@ public class LogIn extends JFrame {
 		btnNewButton_1.setBackground(new Color(53, 132, 228));
 		btnNewButton_1.setBounds(270, 210, 117, 38);
 		contentPane.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            bteDangKy(e);
+	        }
+	    });
 		ActionListener buttonListener = new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
@@ -137,5 +143,16 @@ public class LogIn extends JFrame {
 		    }
 		};
 		btnNewButton.addActionListener(buttonListener);
+		
+	}
+	
+	public void bteDangKy(ActionEvent e) {
+		try {
+			this.dispose();
+	        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			new RegisterView();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 }
